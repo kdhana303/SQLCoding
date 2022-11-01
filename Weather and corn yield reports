@@ -1,0 +1,26 @@
+Problem 1-- Create table definitions using Create statements DDL
+Create table weather_report columns (Weather_date AS date, max_temp Int, min_temp Int, precipitation Int)
+
+create table yield_report column (yr AS int(4), total_corn_wt AS Int)
+
+Problem 2 -- Data ingestion into the created tables
+
+LOAD DATA INFILE 'https://github.com/corteva/code-challenge-template/blob/main/wx_data/USC00110072.txt'
+
+Insert into table weather_report
+fields terminated by '|'
+(weather_date, max_temp, min_temp, precipitation)
+
+LOAD DATA INFILE 'https://github.com/corteva/code-challenge-template/blob/main/yld_data/US_corn_grain_yield.txt'
+
+Insert into table yield_report
+fields terminated by '|'
+(yr, total_corn_wt)
+
+Problem 3 -- Data Analysis on this data
+
+select extract(year from weather_date) AS 'weather_yr', avg(max_temp) AS avg_max_temp, avg(min_temp) AS avg_min_temp, sum(precipitation) AS sum_precipitation
+from weather_report
+group by extract(year from weather_date)
+
+
