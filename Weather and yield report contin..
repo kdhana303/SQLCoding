@@ -1,0 +1,10 @@
+--Problem 3
+
+Create table weather_calculation AS (
+select extract(year from weather_yr) AS weather_yr,
+  CASE WHEN mx_temp = -9999 then NULL else avg(mx_temp) end AS avg_mx_temp,
+  CASE WHEN mb_temp = -9999 then NULL else avg(mn_temp) end AS avg_mn_temp, 
+  sum(precipitation) AS sum_precipitation
+from weather_report
+group by extract(year from weather_yr))
+
